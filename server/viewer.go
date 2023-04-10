@@ -7,8 +7,9 @@ import (
 )
 
 type displayViewer struct {
-	conn    *websocket.Conn
-	actorId int
+	conn      *websocket.Conn
+	worldName string
+	actorId   int
 }
 
 func viewerHandler(w http.ResponseWriter, r *http.Request) {
@@ -29,19 +30,24 @@ func getViewerHandler(w http.ResponseWriter, r *http.Request) {
 		printErr(err)
 		return
 	}
-	registeredWorlds[worldName].viewers = append(registeredWorlds[worldName].viewers, &displayViewer{
-		conn: c,
-	})
-	go viewerListener(c)
+
+	viewer := &displayViewer{
+		worldName: worldName,
+		conn:      c,
+	}
+	registeredWorlds[worldName].viewers = append(registeredWorlds[worldName].viewers, viewer)
+	go viewerListener(viewer)
 }
 
-func viewerListener(c *websocket.Conn) {
+func viewerListener(viewer *displayViewer) {
 	for {
-		_, message, err := c.ReadMessage()
+		_, message, err := viewer.conn.ReadMessage()
 		if err != nil {
-			fmt.Println(err)
+			fmt.Println("4", err)
 			break
 		}
-		fmt.Println("viewer sent", string(message))
+
+		fmt.Println("viewer", viewer.actorId, "sent", "\""+string(message)+"\" to", viewer.worldName)
+		viewerSpeech(viewer.worldName, viewer.actorId, string(message), registeredWorlds[viewer.worldName].conn)
 	}
 }

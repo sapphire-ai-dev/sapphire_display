@@ -12,14 +12,14 @@ func startListener(c *websocket.Conn, name string) {
 	for {
 		_, message, err := c.ReadMessage()
 		if err != nil {
-			fmt.Println(err)
+			fmt.Println("1", err)
 			break
 		}
 
 		var resp *WorldResp
-		err = json.Unmarshal(message, resp)
+		err = json.Unmarshal(message, &resp)
 		if err != nil {
-			fmt.Println(err)
+			fmt.Println("2", err, string(message))
 			break
 		}
 

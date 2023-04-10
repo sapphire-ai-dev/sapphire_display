@@ -42,7 +42,7 @@ func conflict(w http.ResponseWriter) {
 
 func printErr(err error) {
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("3", err)
 	}
 }
 
