@@ -47,7 +47,7 @@ func viewerListener(viewer *displayViewer) {
 			break
 		}
 
-		fmt.Println("viewer", viewer.actorId, "sent", "\""+string(message)+"\" to", viewer.worldName)
+		//fmt.Println("viewer", viewer.actorId, "sent", "\""+string(message)+"\" to", viewer.worldName)
 		viewerSpeech(viewer.worldName, viewer.actorId, string(message), registeredWorlds[viewer.worldName].conn)
 	}
 }

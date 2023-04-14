@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-func init() {
+func Init() {
 	http.HandleFunc("/state", stateHandler)
 	http.HandleFunc("/world", worldHandler)
 	http.HandleFunc("/viewer", viewerHandler)

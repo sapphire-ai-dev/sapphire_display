@@ -119,7 +119,7 @@ func processResponse(worldName string, resp *WorldResp) {
 func processUpdateStateResponse(worldName string, resp *WorldResp) {
 	registeredWorlds[worldName].state = resp.State
 	for _, viewer := range registeredWorlds[worldName].viewers {
-		fmt.Println("state:", registeredWorlds[worldName].state)
+		//fmt.Println("state:", registeredWorlds[worldName].state)
 		printErr(viewer.conn.WriteMessage(websocket.TextMessage, []byte(registeredWorlds[worldName].state)))
 	}
 }
